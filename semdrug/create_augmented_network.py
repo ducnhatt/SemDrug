@@ -1,7 +1,7 @@
 import os
 import json
 from pathlib import Path
-from utils.augmented_network_utils import create_augmentedKG, load_dataset_file
+from semdrug.utils.augmented_network_utils import create_augmentedKG, load_dataset_file
 
 # ---------- Setup ----------
 # BASE_DIR = Path(__file__).resolve().parent
@@ -17,8 +17,12 @@ PATHS = {
     },
        
     "drugbank": {
-        
+        "node2id": "data/drugbank/node2id.json",
+        "bkg_file":"data/drugbank/BKG_file.txt",
+        "train_file":"data/drugbank/Drugbank_train.txt",
+        "data_relations": "data/drugbank/drugbank_relations.json"
     },
+
     "ddinter": {
         "node2id": "data/ddinter/node2id.json",
         "bkg_file":"data/ddinter/BKG_file.txt",
@@ -30,8 +34,7 @@ PATHS = {
         "bkg_file":"data/pharmaDB/BKG_file.txt",
         "train_file":"data/pharmaDB/pharmaDB_train.txt",
         "data_relations": "data/pharmaDB/pharmaDB_relations.json",
-        "data_reversed": "data/pharmaDB/pharmaDB_relations_reversed.json"
-        }
+    }
         
 
     }
@@ -40,7 +43,7 @@ PATHS = {
 # ---------- Main ----------
 def main():
     data = {}
-    datasets = ["ddinter", "pharmaDB"]
+    datasets = ["ddinter", "pharmaDB", "drugbank"]
     # datasets = ["pharmaDB"]
     handle_duplicates = True
 
