@@ -35,8 +35,7 @@ PATHS = {
         "train_file":"data/pharmaDB/pharmaDB_train.txt",
         "data_relations": "data/pharmaDB/pharmaDB_relations.json",
     }
-        
-
+    
     }
 
 
@@ -67,7 +66,7 @@ def main():
 
         # Save KG
         # Save KG
-        augmented_kg.to_csv(f"data/{dataset}/demo_{dataset}_Augmented_KG.txt", sep=" ", index=False, header=False)
+        augmented_kg.to_csv(f"data/{dataset}/{dataset}_Augmented_KG.txt", sep=" ", index=False, header=False)
 
 
         # Save mapping
