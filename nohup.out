@@ -1,0 +1,158 @@
+INFO 06-12 10:15:28 [__init__.py:239] Automatically detected platform cuda.
+06/12/2026 10:15:29 - INFO - __main__ -   Loading model meta-llama/Meta-Llama-3.1-8B-Instruct
+06/12/2026 10:15:29 - INFO - __main__ -   Number of GPUs: 1
+Traceback (most recent call last):
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 409, in hf_raise_for_status
+    response.raise_for_status()
+  File "/venv/main/lib/python3.12/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct/resolve/main/config.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py", line 403, in cached_file
+    resolved_file = hf_hub_download(
+                    ^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 961, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1068, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1596, in _raise_on_head_call_error
+    raise head_call_error
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1484, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1401, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 285, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 309, in _request_wrapper
+    hf_raise_for_status(response)
+  File "/venv/main/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 426, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response) from e
+huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-6a2bdc41-2a30ec723bfee28a36490d66;5f0989d6-f4e0-465f-ab57-a3c5219214ca)
+
+Cannot access gated repo for url https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct/resolve/main/config.json.
+Access to model meta-llama/Llama-3.1-8B-Instruct is restricted. You must have access to it and be authenticated to access it. Please log in.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/SemDrug/llm/run_llm_server.py", line 736, in <module>
+    main(args)
+  File "/workspace/SemDrug/llm/run_llm_server.py", line 588, in main
+    model = LLM(**llm_kwargs)
+            ^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/utils.py", line 1037, in inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/entrypoints/llm.py", line 243, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/engine/llm_engine.py", line 513, in from_engine_args
+    vllm_config = engine_args.create_engine_config(usage_context)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/engine/arg_utils.py", line 1296, in create_engine_config
+    model_config = self.create_model_config()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/engine/arg_utils.py", line 1141, in create_model_config
+    return ModelConfig(
+           ^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/config.py", line 335, in __init__
+    hf_config = get_config(self.hf_config_path or self.model,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/transformers_utils/config.py", line 280, in get_config
+    config_dict, _ = PretrainedConfig.get_config_dict(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/configuration_utils.py", line 591, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/configuration_utils.py", line 650, in _get_config_dict
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/hub.py", line 421, in cached_file
+    raise EnvironmentError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct.
+401 Client Error. (Request ID: Root=1-6a2bdc41-2a30ec723bfee28a36490d66;5f0989d6-f4e0-465f-ab57-a3c5219214ca)
+
+Cannot access gated repo for url https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct/resolve/main/config.json.
+Access to model meta-llama/Llama-3.1-8B-Instruct is restricted. You must have access to it and be authenticated to access it. Please log in.
+INFO 06-12 10:16:44 [__init__.py:239] Automatically detected platform cuda.
+06/12/2026 10:16:45 - INFO - __main__ -   Loading model meta-llama/Meta-Llama-3.1-8B-Instruct
+06/12/2026 10:16:45 - INFO - __main__ -   Number of GPUs: 1
+INFO 06-12 10:16:54 [config.py:585] This model supports multiple tasks: {'score', 'embed', 'classify', 'generate', 'reward'}. Defaulting to 'generate'.
+INFO 06-12 10:16:54 [config.py:1697] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 06-12 10:16:59 [core.py:54] Initializing a V1 LLM engine (v0.8.2) with config: model='meta-llama/Meta-Llama-3.1-8B-Instruct', speculative_config=None, tokenizer='meta-llama/Meta-Llama-3.1-8B-Instruct', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir='/workspace/.hf_home', load_format=LoadFormat.AUTO, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto,  device_config=cuda, decoding_config=DecodingConfig(guided_decoding_backend='xgrammar', reasoning_backend=None), observability_config=ObservabilityConfig(show_hidden_metrics=False, otlp_traces_endpoint=None, collect_model_forward_time=False, collect_model_execute_time=False), seed=None, served_model_name=meta-llama/Meta-Llama-3.1-8B-Instruct, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, disable_mm_preprocessor_cache=False, mm_processor_kwargs=None, pooler_config=None, compilation_config={"level":3,"custom_ops":["none"],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output"],"use_inductor":true,"compile_sizes":[],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"max_capture_size":512}
+WARNING 06-12 10:17:00 [utils.py:2321] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in <vllm.v1.worker.gpu_worker.Worker object at 0x7eeda634cf50>
+INFO 06-12 10:17:01 [parallel_state.py:954] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0
+INFO 06-12 10:17:01 [cuda.py:220] Using Flash Attention backend on V1 engine.
+INFO 06-12 10:17:01 [gpu_model_runner.py:1174] Starting to load model meta-llama/Meta-Llama-3.1-8B-Instruct...
+WARNING 06-12 10:17:01 [topk_topp_sampler.py:63] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 06-12 10:17:02 [weight_utils.py:265] Using model weights format ['*.safetensors']
+INFO 06-12 10:17:18 [weight_utils.py:281] Time spent downloading weights for meta-llama/Meta-Llama-3.1-8B-Instruct: 16.827509 seconds
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:00<00:00,  8.42it/s]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:00<00:00,  3.03it/s]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:01<00:00,  2.16it/s]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:01<00:00,  1.71it/s]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:01<00:00,  2.01it/s]
+
+INFO 06-12 10:17:21 [loader.py:447] Loading weights took 2.16 seconds
+INFO 06-12 10:17:21 [gpu_model_runner.py:1186] Model loading took 14.9889 GB and 20.648159 seconds
+INFO 06-12 10:17:30 [backends.py:415] Using cache directory: /root/.cache/vllm/torch_compile_cache/1132dc0981/rank_0_0 for vLLM's torch.compile
+INFO 06-12 10:17:30 [backends.py:425] Dynamo bytecode transform time: 8.60 s
+INFO 06-12 10:17:33 [backends.py:132] Cache the graph of shape None for later use
+INFO 06-12 10:17:56 [backends.py:144] Compiling a graph for general shape takes 25.47 s
+Traceback (most recent call last):
+  File "/workspace/SemDrug/llm/run_llm_server.py", line 736, in <module>
+    main(args)
+  File "/workspace/SemDrug/llm/run_llm_server.py", line 588, in main
+    model = LLM(**llm_kwargs)
+            ^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/utils.py", line 1037, in inner
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/entrypoints/llm.py", line 243, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/engine/llm_engine.py", line 520, in from_engine_args
+    return engine_cls.from_vllm_config(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py", line 113, in from_vllm_config
+    return cls(vllm_config=vllm_config,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py", line 88, in __init__
+    self.engine_core = EngineCoreClient.make_client(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 66, in make_client
+    return SyncMPClient(vllm_config, executor_class, log_stats)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 337, in __init__
+    super().__init__(
+  File "/venv/main/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 301, in __init__
+    self.resources.proc_handle = BackgroundProcHandle(
+                                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/vllm/v1/utils.py", line 124, in __init__
+    if reader.recv()["status"] != "READY":
+       ^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/multiprocessing/connection.py", line 395, in _recv
+    chunk = read(handle, remaining)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
