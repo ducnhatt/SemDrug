@@ -15,7 +15,7 @@ import json
 
 import re
 
-from utils.Kpaths_utils import (
+from semdrug.utils.Kpaths_utils import (
     load_and_process_mappings,
     load_and_process_dataset,
     build_graph_from_file,
@@ -59,7 +59,7 @@ PATHS = {
         "node2id": os.path.join(DATA_ROOT, "ddinter", "node2id.json"),
         "train_set": os.path.join(DATA_ROOT, "ddinter", "ddinter_train_set.csv"),
         "test_set": os.path.join(DATA_ROOT, "ddinter", "ddinter_test_set.json"),
-        "embeddings": os.path.join(EMBEDDINGS_ROOT, "ddinter_embeddings.pkl"),
+        "embeddings": os.path.join(EMBEDDINGS_ROOT, "ddinter_node_embeddings_full.pkl"),
     },
     "pharmaDB": {
         "inductive": os.path.join(DATA_ROOT, "pharmaDB", "pharmaDB_Augmented_KG.txt"),
@@ -68,7 +68,7 @@ PATHS = {
         "node2id": os.path.join(DATA_ROOT, "pharmaDB", "node2id.json"),
         "train_set": os.path.join(DATA_ROOT, "pharmaDB", "pharmaDB_train_set.csv"),
         "test_set": os.path.join(DATA_ROOT, "pharmaDB", "pharmaDB_test_set.json"),
-        "embeddings": os.path.join(EMBEDDINGS_ROOT, "pharmaDB_embeddings.pkl"),
+        "embeddings": os.path.join(EMBEDDINGS_ROOT, "pharmaDB_node_embeddings_full.pkl"),
     },
 }
 
