@@ -21,3 +21,84 @@ The project currently supports experiments on two primary biomedical benchmarks:
 
 The main thesis experiments focus on **PharmacotherapyDB** under an inductive drug-disease therapeutic indication prediction setting, and **DDInter** under a cold-start setting.
 
+## Environment Setup
+
+Create a Python virtual environment:
+
+```powershell
+python -m venv .semdrug-env
+.\.semdrug-env\Scripts\activate
+```
+
+Upgrade `pip`:
+
+```powershell
+python -m pip install --upgrade pip
+```
+
+Install dependencies:
+
+```powershell
+pip install -r requirements.txt
+```
+
+If `requirements.txt` has not been created yet, install the main packages manually:
+
+```powershell
+pip install pandas numpy networkx scikit-learn tqdm datasets sentence-transformers torch transformers vllm python-dotenv
+```
+
+---
+
+## Hugging Face Authentication
+
+Some LLaMA models require Hugging Face authentication.
+
+Create a `.env` file in the project root:
+
+```text
+HF_API_KEY=your_huggingface_token_here
+```
+
+Do **not** commit `.env` to Git.
+
+The source code should load the token like this:
+
+```python
+import os
+from dotenv import load_dotenv
+from huggingface_hub import login
+
+load_dotenv()
+HF_API_KEY = os.getenv("HF_API_KEY")
+
+if HF_API_KEY:
+    login(token=HF_API_KEY)
+```
+
+---
+
+## `.gitignore`
+
+Recommended `.gitignore`:
+
+```text
+__pycache__/
+*.pyc
+
+.env
+.semdrug-env/
+.venv/
+
+outputs/
+*.csv
+*.pkl
+*.pt
+*.bin
+*.safetensors
+
+.DS_Store
+.ipynb_checkpoints/
+```
+
+---

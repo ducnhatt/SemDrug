@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 # Dataset paths
 TEST_SET_PATH = {
     "drugbank": "data/drugbank/drugbank_test_set.json",
-    "ddinter": "data/ddinter/ddinter.json",
-    "pharmaDB":  "data/paths/pharmaDB_test_add_reverse.json",
+    "ddinter": "data/ddinter/ddinter_test_set.json",
+    "pharmaDB":  "data/pharmaDB/pharmaDB_test_set.json",
 }
 
 # Labels and stopwords
