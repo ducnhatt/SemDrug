@@ -103,4 +103,75 @@ outputs/
 
 ---
 
+## Repository Structure
 
+An overview of the core directories in this repository:
+
+* `data/`: Contains datasets used for KG construction and benchmarking (e.g., Hetionet, PharmacotherapyDB, DDInter, DrugBank).
+* `embeddings/`: Stores pre-computed semantic embeddings for KG entities (essential for MMR retrieval and proxy augmentation).
+* `llm/`: Scripts for interacting with Large Language Models (including local vLLM server deployment and generation scripts).
+* `semdrug/`: Core Python modules for the SemDrug framework (graph preparation, semantic scoring, and multi-hop path retrieval).
+* `prompt/`: Template files used to construct the zero-shot reasoning prompts fed to the LLM.
+* `outputs/`: Default directory for storing evaluation results, generated logs, and intermediate pipeline artifacts.
+
+---
+
+## Pipeline Execution (Example: DDInter)
+
+**Step 1: Download Datasets**
+Download the required datasets and KGs from [this Google Drive link](https://drive.google.com/file/d/1_6meo_nB2RqHrVM9pqCBA67FQ6PR4QiI/view) and extract the archive directly into the root directory of the project (`SemDrug/`). Extracting it in the root will result in the correct structure:
+```text
+SemDrug/
+├── data/
+│   ├── ddinter/
+│   ├── pharmaDB/
+│   └── hetionet/
+```
+
+**Step 2: Create Augmented Network**
+```bash
+python -m semdrug.create_augmented_network
+```
+
+**Step 3: Generate Node Text and Embeddings**
+```bash
+python -m semdrug.embeddings_enhanced \
+  --dataset_name ddinter \
+  --retrieval_json data/ddinter/ddinter_test_set.json
+```
+
+**Step 4: Quality-Aware Semantic MMR Path Retrieval & Proxy Augmentation**
+```bash
+python -m semdrug.filter_path_embeddings \
+  --dataset_name ddinter \
+  --add_reverse_edges \
+  --candidate_pool 64 \
+  --max_depth 4 \
+  --max_final_paths 10 \
+  --mmr_lambda 0.5 \
+  --score_floor_delta 0.05 \
+  --add_cold_start_similarity_edges \
+  --cold_start_top_proxy 1 \
+  --cold_start_min_similarity 0.90 \
+  --output_dir prompt/ddinter
+```
+
+**Step 5: LLM Inference**
+```bash
+python llm/run_llm_server.py \
+  --dataset_name ddinter \
+  --dataset_path prompt/ddinter/ddinter_semantic_mmr_d4_pool64_k10_mmr0.5_delta0.05_coldtop1sim0.9.json \
+  --use_kg \
+  --max_tokens 64 \
+  --use_options \
+  --dtype half \
+  --output_dir outputs/ddinter
+```
+
+**Step 6: Evaluate Predictions**
+```bash
+python llm/evaluate_llm_regex.py \
+  --prediction_path outputs/ddinter/ddinter_semantic_mmr_d4_pool64_k10_mmr0.5_delta0.05_coldtop1sim0.9_kg/predictions.csv \
+  --dataset ddinter \
+  --use_options
+```
